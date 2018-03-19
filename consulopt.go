@@ -8,7 +8,9 @@ import (
 
 func ServiceRegster(serviceHttp,sId,sName,host,router string,port int ,tags []string) error{
 	config := consulapi.DefaultConfig()
-	config.Address = serviceHttp
+	if serviceHttp != "" {
+		config.Address = serviceHttp
+	}
 	client,err := consulapi.NewClient(config)
 	if err != nil {
 		return  err
@@ -44,11 +46,14 @@ func ServiceRegster(serviceHttp,sId,sName,host,router string,port int ,tags []st
 }
 
 
-func FindServiceByServiceName(serviceName string)string{
+func FindServiceByServiceName(serviceName,serviceHttp string)string{
 	if serviceName == "" || len(serviceName) == 0 {
 		return ""
 	}
 	config := consulapi.DefaultConfig()
+	if serviceHttp != "" {
+		config.Address = serviceHttp
+	}
 	client,err := consulapi.NewClient(config)
 	if err != nil {
 		return ""
@@ -56,7 +61,7 @@ func FindServiceByServiceName(serviceName string)string{
 	services,_ := client.Agent().Services()
 
 	if _,found := services[serviceName]; found {
-	   return  "http://127.0.0.1:9026"
+	   return  serviceHttp
 	}
 	return  ""
 }
