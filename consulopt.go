@@ -46,7 +46,7 @@ func ServiceRegster(serviceHttp,sId,sName,host,router string,port int ,tags []st
 }
 
 
-func FindServiceByServiceName(serviceName,serviceHttp string)string{
+func FindServiceByServiceName(serviceName,serviceHttp,cusUrl string)string{
 	if serviceName == "" || len(serviceName) == 0 {
 		return ""
 	}
@@ -61,8 +61,8 @@ func FindServiceByServiceName(serviceName,serviceHttp string)string{
 	services,_ := client.Agent().Services()
 
 	if _,found := services[serviceName]; found {
-		if serviceHttp != ""{
-			return serviceHttp
+		if cusUrl != ""{
+			return cusUrl
 		}else{
 			return config.Scheme+"://127.0.0.1:9026"
 		}
