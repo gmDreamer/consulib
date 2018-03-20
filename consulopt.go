@@ -61,7 +61,12 @@ func FindServiceByServiceName(serviceName,serviceHttp string)string{
 	services,_ := client.Agent().Services()
 
 	if _,found := services[serviceName]; found {
-	   return  config.Scheme+"://127.0.0.1:9026"
+		if serviceHttp != ""{
+			return serviceHttp
+		}else{
+			return config.Scheme+"://127.0.0.1:9026"
+		}
+
 	}
 	return  ""
 }
