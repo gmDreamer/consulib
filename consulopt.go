@@ -24,7 +24,7 @@ func ServiceRegster(serviceHttp,sId,sName,host,router string,port int ,tags []st
 	registration.Address = host
 
 	check := &consulapi.AgentServiceCheck{
-		HTTP:  fmt.Sprintf("http://%s:%d%s",registration.Address,port,router),
+		HTTP:  fmt.Sprintf("https://%s:%d%s",registration.Address,port,router),
 		Timeout:                        "20s",
 		Interval:                       "5s",
 		DeregisterCriticalServiceAfter: "60s", //check失败后30秒删除本服务
